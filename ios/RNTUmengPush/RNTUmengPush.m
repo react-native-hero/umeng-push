@@ -4,7 +4,6 @@
 #import <UMPush/UMessage.h>
 #import <React/RCTConvert.h>
 
-NSString *umengChannel = @"";
 RNTUmengPush *umengPushInstance;
 NSDictionary *umengLaunchOptions;
 
@@ -78,8 +77,6 @@ RCT_EXPORT_MODULE(RNTUmengPush);
 
 + (void)init:(NSString *)appKey channel:(NSString *)channel debug:(BOOL)debug {
 
-    umengChannel = channel;
-    
     [UMConfigure initWithAppkey:appKey channel:channel];
     [UMConfigure setLogEnabled:debug];
 
@@ -177,12 +174,6 @@ RCT_EXPORT_MODULE(RNTUmengPush);
       @"localNotification",
       @"remoteNotification",
   ];
-}
-
-- (NSDictionary *)constantsToExport {
-    return @{
-         @"CHANNEL": umengChannel,
-     };
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler API_AVAILABLE(ios(10.0)) {

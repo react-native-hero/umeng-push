@@ -28,8 +28,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         var pushModule: RNTUmengPushModule? = null
 
-        private var channel = ""
-
         private var deviceToken = ""
 
         // 初始化友盟基础库
@@ -37,8 +35,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
             val appKey = metaData.getString("UMENG_APP_KEY", "").trim()
             val pushSecret = metaData.getString("UMENG_PUSH_SECRET", "").trim()
-
-            channel = metaData.getString("UMENG_CHANNEL", "").trim()
+            val channel = metaData.getString("UMENG_CHANNEL", "").trim()
 
             UMConfigure.setLogEnabled(debug)
             UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
@@ -190,8 +187,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     override fun getConstants(): Map<String, Any>? {
 
         val constants: MutableMap<String, Any> = HashMap()
-
-        constants["CHANNEL"] = channel
 
         constants["NOTIFICATION_PLAY_SERVER"] = MsgConstant.NOTIFICATION_PLAY_SERVER
         constants["NOTIFICATION_PLAY_SDK_ENABLE"] = MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE
