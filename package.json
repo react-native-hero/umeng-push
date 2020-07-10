@@ -1,0 +1,24 @@
+{
+  "name": "@react-native-hero/umeng-push",
+  "version": "0.0.1",
+  "description": "react native umeng push",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-hero/umeng-push.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "umeng push"
+  ],
+  "author": "musicode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-native-hero/umeng-push/issues"
+  },
+  "homepage": "https://github.com/react-native-hero/umeng-push#readme"
+}

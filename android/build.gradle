@@ -1,0 +1,77 @@
+buildscript {
+    // Buildscript is evaluated before everything else so we can't use safeExtGet
+    def kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.3.40'
+
+    repositories {
+        jcenter()
+        google()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', 28)
+    buildToolsVersion safeExtGet('buildToolsVersion', '28.0.3')
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 16)
+        targetSdkVersion safeExtGet('targetSdkVersion', 28)
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet('kotlinVersion', '1.3.40')}"
+
+    implementation 'com.umeng.umsdk:huawei-basetb:2.6.3.306'
+    implementation 'com.umeng.umsdk:huawei-pushtb:2.6.3.306'
+    implementation 'com.umeng.umsdk:huawei-umengaccs:1.2.4'
+
+    implementation 'com.umeng.umsdk:meizu-push:3.8.7'
+    implementation 'com.umeng.umsdk:meizu-umengaccs:1.1.1'
+
+    implementation 'com.umeng.umsdk:oppo-push:2.0.2'
+    implementation 'com.umeng.umsdk:oppo-umengaccs:1.0.6'
+
+    implementation 'com.umeng.umsdk:vivo-push:2.3.5'
+    implementation 'com.umeng.umsdk:vivo-umengaccs:1.1.0'
+
+    implementation 'com.umeng.umsdk:xiaomi-push:3.7.0'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.1.4'
+
+    // 基础组件库依赖(必须)
+    implementation "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.1.0')}"
+    implementation "com.umeng.umsdk:utdid:${safeExtGet('umengUtdidVersion', '1.5.2')}"
+    implementation "com.umeng.umsdk:asms:${safeExtGet('umengAsmsVersion', '1.1.3')}"
+    implementation "com.umeng.umsdk:crash:${safeExtGet('umengCrashVersion', '0.0.4')}"
+
+    // 友盟 push 相关依赖(必须)
+    implementation "com.umeng.umsdk:push:${safeExtGet('umengPushVersion', '6.1.0')}"
+
+    implementation 'com.umeng.umsdk:alicloud-httpdns:1.2.5'
+    implementation 'com.umeng.umsdk:alicloud-utils:1.1.5'
+    implementation 'com.umeng.umsdk:alicloud_beacon:1.0.1'
+
+    implementation "com.umeng.umsdk:agoo-accs:${safeExtGet('umengAgooAccsVersion', '3.3.8.8-open-fix2')}"
+    implementation "com.umeng.umsdk:agoo_networksdk:${safeExtGet('umengAgooNetworkVersion', '3.5.5')}"
+    implementation "com.umeng.umsdk:agoo_tlog:${safeExtGet('umengAgooTlogVersion', '3.0.0.17')}"
+    implementation "com.umeng.umsdk:agoo_tnet4android:${safeExtGet('umengAgooTnetVersion', '3.1.14.9')}"
+}
+
+apply plugin: 'kotlin-android'
