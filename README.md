@@ -364,5 +364,4 @@ removeAlias('alias', 'type').then(data => {
 .catch(err => {
   // failure
 })
-
 ```

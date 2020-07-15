@@ -20,15 +20,26 @@ import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
 import org.json.JSONObject
 
-class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext), ActivityEventListener {
+class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     companion object {
 
-        var launchMessage = ""
+        private const val ALIAS_TYPE_SINA = "sina"
+        private const val ALIAS_TYPE_TENCENT = "tencent"
+        private const val ALIAS_TYPE_QQ = "qq"
+        private const val ALIAS_TYPE_WEIXIN = "weixin"
+        private const val ALIAS_TYPE_BAIDU = "baidu"
+        private const val ALIAS_TYPE_RENREN = "renren"
+        private const val ALIAS_TYPE_KAIXIN = "kaixin"
+        private const val ALIAS_TYPE_DOUBAN = "douban"
+        private const val ALIAS_TYPE_FACEBOOK = "facebook"
+        private const val ALIAS_TYPE_TWITTER = "twitter"
 
-        var pushModule: RNTUmengPushModule? = null
 
+        private var launchMessage = ""
         private var deviceToken = ""
+        private var pushModule: RNTUmengPushModule? = null
+
 
         // 初始化友盟基础库
         fun init(app: Application, metaData: Bundle, debug: Boolean) {
@@ -167,21 +178,10 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     init {
         // 日活统计及多维度推送的必调用方法
         pushAgent.onAppStart()
-        reactContext.addActivityEventListener(this)
     }
 
     override fun getName(): String {
         return "RNTUmengPush"
-    }
-
-    override fun initialize() {
-        super.initialize()
-        pushModule = this
-    }
-
-    override fun onCatalystInstanceDestroy() {
-        super.onCatalystInstanceDestroy()
-        pushModule = null
     }
 
     override fun getConstants(): Map<String, Any>? {
@@ -192,8 +192,29 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         constants["NOTIFICATION_PLAY_SDK_ENABLE"] = MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE
         constants["NOTIFICATION_PLAY_SDK_DISABLE"] = MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE
 
+        constants["ALIAS_TYPE_SINA"] = ALIAS_TYPE_SINA
+        constants["ALIAS_TYPE_TENCENT"] = ALIAS_TYPE_TENCENT
+        constants["ALIAS_TYPE_QQ"] = ALIAS_TYPE_QQ
+        constants["ALIAS_TYPE_WEIXIN"] = ALIAS_TYPE_WEIXIN
+        constants["ALIAS_TYPE_BAIDU"] = ALIAS_TYPE_BAIDU
+        constants["ALIAS_TYPE_RENREN"] = ALIAS_TYPE_RENREN
+        constants["ALIAS_TYPE_KAIXIN"] = ALIAS_TYPE_KAIXIN
+        constants["ALIAS_TYPE_DOUBAN"] = ALIAS_TYPE_DOUBAN
+        constants["ALIAS_TYPE_FACEBOOK"] = ALIAS_TYPE_FACEBOOK
+        constants["ALIAS_TYPE_TWITTER"] = ALIAS_TYPE_TWITTER
+
         return constants
 
+    }
+
+    override fun initialize() {
+        super.initialize()
+        pushModule = this
+    }
+
+    override fun onCatalystInstanceDestroy() {
+        super.onCatalystInstanceDestroy()
+        pushModule = null
     }
 
     @ReactMethod
@@ -384,34 +405,34 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
     private fun getAliasType(type: String): String {
         return when (type) {
-            "sina" -> {
+            ALIAS_TYPE_SINA -> {
                "sina"
             }
-            "tencent" -> {
+            ALIAS_TYPE_TENCENT -> {
                 "tencent"
             }
-            "qq" -> {
+            ALIAS_TYPE_QQ -> {
                 "qq"
             }
-            "weixin" -> {
+            ALIAS_TYPE_WEIXIN -> {
                 "weixin"
             }
-            "baidu" -> {
+            ALIAS_TYPE_BAIDU -> {
                 "baidu"
             }
-            "renren" -> {
+            ALIAS_TYPE_RENREN -> {
                 "renren"
             }
-            "kaixin" -> {
+            ALIAS_TYPE_KAIXIN -> {
                 "kaixin"
             }
-            "douban" -> {
+            ALIAS_TYPE_DOUBAN -> {
                 "douban"
             }
-            "facebook" -> {
+            ALIAS_TYPE_FACEBOOK -> {
                 "facebook"
             }
-            "twitter" -> {
+            ALIAS_TYPE_TWITTER -> {
                 "twitter"
             }
             else -> {
@@ -481,14 +502,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             }
         }
         return custom
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-
-    }
-
-    override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
-
     }
 
 }

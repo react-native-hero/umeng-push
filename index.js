@@ -5,16 +5,16 @@ const { RNTUmengPush } = NativeModules
 const eventEmitter = new NativeEventEmitter(RNTUmengPush)
 
 export const ALIAS_TYPE = {
-  SINA: 'sina',
-  TENCENT: 'tencent',
-  QQ: 'qq',
-  WEIXIN: 'weixin',
-  BAIDU: 'baidu',
-  RENREN: 'renren',
-  KAIXIN: 'kaixin',
-  DOUBAN: 'douban',
-  FACEBOOK: 'facebook',
-  TWITTER: 'twitter',
+  SINA: ALIAS_TYPE_SINA,
+  TENCENT: ALIAS_TYPE_TENCENT,
+  QQ: ALIAS_TYPE_QQ,
+  WEIXIN: ALIAS_TYPE_WEIXIN,
+  BAIDU: ALIAS_TYPE_BAIDU,
+  RENREN: ALIAS_TYPE_RENREN,
+  KAIXIN: ALIAS_TYPE_KAIXIN,
+  DOUBAN: ALIAS_TYPE_DOUBAN,
+  FACEBOOK: ALIAS_TYPE_FACEBOOK,
+  TWITTER: ALIAS_TYPE_TWITTER,
 }
 
 export function start() {
