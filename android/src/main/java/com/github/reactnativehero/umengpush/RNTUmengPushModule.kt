@@ -116,7 +116,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                 override fun onSuccess(token: String) {
                     deviceToken = token
                 }
-                override fun onFailure(code: String, msg: String) {}
+                override fun onFailure(code: String, msg: String) {
+
+                }
             })
         }
 
