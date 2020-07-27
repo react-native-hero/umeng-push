@@ -42,7 +42,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
 
         // 初始化友盟基础库
-        fun init(app: Application, metaData: Bundle, debug: Boolean) {
+        @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
 
             val appKey = metaData.getString("UMENG_APP_KEY", "").trim()
             val pushSecret = metaData.getString("UMENG_PUSH_SECRET", "").trim()
@@ -54,7 +54,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         }
 
         // 初始化友盟推送
-        fun push(app: Application, resourcePackageName: String, notificationOnForeground: Boolean) {
+        @JvmStatic fun push(app: Application, resourcePackageName: String, notificationOnForeground: Boolean) {
 
             val pushAgent = PushAgent.getInstance(app)
 
@@ -122,27 +122,27 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             })
         }
 
-        fun huawei(app: Application, metaData: Bundle) {
+        @JvmStatic fun huawei(app: Application, metaData: Bundle) {
             HuaWeiRegister.register(app)
         }
 
-        fun xiaomi(app: Application, metaData: Bundle) {
+        @JvmStatic fun xiaomi(app: Application, metaData: Bundle) {
             val appId = metaData.getString("XIAOMI_PUSH_APP_ID", "").trim()
             val appKey = metaData.getString("XIAOMI_PUSH_APP_KEY", "").trim()
             MiPushRegistar.register(app, appId, appKey)
         }
 
-        fun oppo(app: Application, metaData: Bundle) {
+        @JvmStatic fun oppo(app: Application, metaData: Bundle) {
             val appKey = metaData.getString("OPPO_PUSH_APP_KEY", "").trim()
             val appSecret = metaData.getString("OPPO_PUSH_APP_SECRET", "").trim()
             OppoRegister.register(app, appKey, appSecret)
         }
 
-        fun vivo(app: Application, metaData: Bundle) {
+        @JvmStatic fun vivo(app: Application, metaData: Bundle) {
             VivoRegister.register(app)
         }
 
-        fun meizu(app: Application, metaData: Bundle) {
+        @JvmStatic fun meizu(app: Application, metaData: Bundle) {
             val appId = metaData.getString("MEIZU_PUSH_APP_ID", "").trim()
             val appKey = metaData.getString("MEIZU_PUSH_APP_KEY", "").trim()
             MeizuRegister.register(app, appId, appKey)
