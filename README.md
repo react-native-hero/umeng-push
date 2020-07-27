@@ -317,7 +317,7 @@ start()
 
 // 下面这些方法的具体用法和注意事项，请参考文档
 // https://developer.umeng.com/docs/67966/detail/98583#h1--tag-alias-4
-getTasg().then(data => {
+getTags().then(data => {
   // success
   data.tags
 })
