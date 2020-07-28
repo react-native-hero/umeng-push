@@ -17,6 +17,12 @@ export const ALIAS_TYPE = {
   TWITTER: RNTUmengPush.ALIAS_TYPE_TWITTER,
 }
 
+export const NOTIFICATION_PLAY = {
+  SERVER: RNTUmengPush.NOTIFICATION_PLAY_SERVER,
+  SDK_ENABLE: RNTUmengPush.NOTIFICATION_PLAY_SDK_ENABLE,
+  SDK_DISABLE: RNTUmengPush.NOTIFICATION_PLAY_SDK_DISABLE,
+}
+
 export function start() {
   RNTUmengPush.start()
 }

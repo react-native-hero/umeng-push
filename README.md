@@ -234,6 +234,7 @@ class PushActivity : UmengNotifyClickActivity() {
 ```js
 import {
   ALIAS_TYPE,
+  NOTIFICATION_PLAY,
   start,
   getTags,
   addTags,
@@ -241,6 +242,7 @@ import {
   setAlias,
   addAlias,
   removeAlias,
+  setAdvanced,
   addListener,
 } from '@react-native-hero/push'
 
@@ -364,4 +366,25 @@ removeAlias('alias', 'type').then(data => {
 .catch(err => {
   // failure
 })
+
+// 高级设置
+setAdvanced({
+  // ios: 当应用在前台时收到推送是否弹出 Alert，默认弹出
+  autoAlert: true,
+  // ios: 是否允许 SDK 自动清空角标，默认自动角标清零
+  badgeClear: true,
+
+  // android: 是否响铃，使用 NOTIFICATION_PLAY 枚举值 
+  notificationPlaySound: NOTIFICATION_PLAY.SERVER,
+  // android: 是否点亮呼吸灯，使用 NOTIFICATION_PLAY 枚举值
+  notificationPlayLights: NOTIFICATION_PLAY.SERVER,
+  // android: 是否振动，使用 NOTIFICATION_PLAY 枚举值
+  notificationPlayVibrate: NOTIFICATION_PLAY.SERVER,
+  // android: 设置免打扰时间段，期间收到通知消息时不响铃，不闪灯，不振动
+  noDisturbStartHour: 23,
+  noDisturbStartMinute: 0,
+  noDisturbEndHour: 7,
+  noDisturbEndMinute: 0,
+})
+
 ```

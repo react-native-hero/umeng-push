@@ -27,9 +27,6 @@ RCT_EXPORT_MODULE(RNTUmengPush);
     [UMConfigure initWithAppkey:appKey channel:channel];
     [UMConfigure setLogEnabled:debug];
 
-    // 当应用在前台运行收到 Push 时不弹出 Alert 框
-    [UMessage setAutoAlert:NO];
-
 }
 
 + (void)push:(NSDictionary *)launchOptions {
@@ -460,7 +457,12 @@ RCT_EXPORT_METHOD(removeAlias:(NSString *)alias
 
 // 高级设置
 RCT_EXPORT_METHOD(setAdvanced:(NSDictionary*)options) {
-
+    
+    // 当应用在前台运行收到 Push 时是否弹出 Alert 框
+    if ([options objectForKey:@"autoAlert"]) {
+        [UMessage setAutoAlert:[RCTConvert BOOL:options[@"autoAlert"]]];
+    }
+    
     // 设置是否允许 SDK 自动清空角标，默认自动角标清零
     if ([options objectForKey:@"badgeClear"]) {
         [UMessage setBadgeClear:[RCTConvert BOOL:options[@"badgeClear"]]];
