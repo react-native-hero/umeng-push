@@ -36,10 +36,11 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         private const val ALIAS_TYPE_TWITTER = "twitter"
 
 
-        private var launchMessage = ""
         private var deviceToken = ""
+        private var launchMessage: UMessage? = null
         private var pushModule: RNTUmengPushModule? = null
 
+        private var isStarted = false
 
         // 初始化友盟基础库
         @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
@@ -103,7 +104,12 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                 override fun launchApp(context: Context?, msg: UMessage?) {
                     super.launchApp(context, msg)
                     msg?.let {
-                        pushModule?.onNotificationClicked(it)
+                        if (isStarted) {
+                            pushModule?.onNotificationClicked(it)
+                        }
+                        else {
+                            launchMessage = it
+                        }
                     }
                 }
 
@@ -157,12 +163,18 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             // 跳转到 main activity
             intent?.getStringExtra(AgooConstants.MESSAGE_BODY)?.let {
                 if (it.isNotEmpty()) {
-                    if (pushModule == null) {
-                        launchMessage = it
+
+                    try {
+                        val msg = UMessage(JSONObject(it))
+                        if (isStarted) {
+                            pushModule?.onNotificationClicked(msg)
+                        }
+                        else {
+                            launchMessage = msg
+                        }
                     }
-                    else {
-                        pushModule?.onNotificationClicked(it)
-                    }
+                    catch (e: Exception) {}
+
                 }
             }
 
@@ -231,17 +243,15 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         map.putString("deviceToken", deviceToken)
 
         // 启动参数
-        if (launchMessage.isNotEmpty()) {
-            try {
-                val msg = UMessage(JSONObject(launchMessage))
-                map.putMap("notification", formatNotification(msg))
-                map.putMap("custom", formatCustom(msg))
-            }
-            catch (e: Exception) {}
-            launchMessage = ""
+        launchMessage?.let {
+            map.putMap("notification", formatNotification(it))
+            map.putMap("custom", formatCustom(it))
+            launchMessage = null
         }
 
         sendEvent("register", map)
+
+        isStarted = true
 
     }
 
@@ -463,14 +473,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         sendEvent("remoteNotification", map)
 
-    }
-
-    fun onNotificationClicked(message: String) {
-        try {
-            val msg = UMessage(JSONObject(message))
-            onNotificationClicked(msg)
-        }
-        catch (e: Exception) {}
     }
 
     private fun onMessage(message: UMessage) {
