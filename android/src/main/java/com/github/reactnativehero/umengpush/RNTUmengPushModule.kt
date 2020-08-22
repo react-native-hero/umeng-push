@@ -224,11 +224,13 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     override fun initialize() {
         super.initialize()
         pushModule = this
+        isStarted = false
     }
 
     override fun onCatalystInstanceDestroy() {
         super.onCatalystInstanceDestroy()
         pushModule = null
+        isStarted = false
     }
 
     @ReactMethod
