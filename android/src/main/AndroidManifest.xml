@@ -59,7 +59,7 @@
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="${HUAWEI_PUSH_APP_ID}"
+            android:value="appid=${HUAWEI_PUSH_APP_ID}"
         />
         <meta-data
             android:name="com.vivo.push.app_id"
@@ -76,6 +76,12 @@
             android:exported="true"
         />
 
+        <activity-alias
+            android:name="${applicationId}.UmengPushActivity"
+            android:exported="true"
+            android:targetActivity=".UmengPushActivity"
+        />
+
         <!--魅族push应用定义消息receiver声明 -->
         <receiver android:name=".MeizuReceiver">
             <intent-filter>
@@ -88,7 +94,7 @@
                 <!-- 兼容低版本Flyme3推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />
-                <category android:name="${applicationId}"></category>
+                <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
 

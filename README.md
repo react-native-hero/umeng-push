@@ -83,14 +83,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 修改 `android/build.gradle`，如下：
 
 ```
-buildscript {
-    ext {
-        // 确保添加了这两个版本号
-        // 以后如果友盟有升级，直接改这里
-        umengPushVersion = "6.1.0"
-        umengAgooAccsVersion = "3.3.8.8-open-fix2"
-    }
-}
 allprojects {
     repositories {
         // 确保添加了友盟仓库
@@ -138,11 +130,6 @@ android {
         }
     }
 }
-
-dependencies {
-    implementation "com.umeng.umsdk:push:${rootProject.ext.umengPushVersion}"
-    implementation "com.umeng.umsdk:agoo-accs:${rootProject.ext.umengAgooAccsVersion}"
-}
 ```
 
 配置厂商通道请先阅读[官方文档](https://developer.umeng.com/docs/66632/detail/98589)，主要是获取各个通道的 `appId`、`appKey`、`appSecret` 等数据，并保存到友盟后台的应用信息里。
@@ -151,6 +138,12 @@ dependencies {
 
 ```kotlin
 override fun onCreate() {
+
+    // 配置厂商通道 Activity 展示的页面
+    UmengPushActivity.activityView = R.layout.splash_screen_default
+    // 配置厂商通道 Activity 跳转的 mainActivity
+    UmengPushActivity.mainActivityClass = MainActivity::class.java
+
     val metaData = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA).metaData
 
     // 初始化友盟基础库
@@ -179,47 +172,9 @@ public static final int *;
 }
 ```
 
-### 创建华为、小米、魅族厂商通道使用的 Activity
+### 配置华为、小米、魅族厂商通道使用的 Activity
 
-在你的包（比如 `com.abc`）下，新建一个 `umeng` 包，并创建一个 `PushActivity`，如下：
-
-```kotlin
-package com.abc.umeng
-
-import android.content.Intent
-import android.os.Bundle
-import android.os.PersistableBundle
-import com.finstao.MainActivity
-import com.github.reactnativehero.umengpush.RNTUmengPushModule
-import com.umeng.message.UmengNotifyClickActivity
-
-class PushActivity : UmengNotifyClickActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        // 这里配置一个页面，比如使用你自己的闪屏页
-        setContentView(R.layout.splash_screen)
-    }
-
-    override fun onMessage(intent: Intent?) {
-        super.onMessage(intent)
-        RNTUmengPushModule.handleMessage(this, MainActivity::class.java, intent)
-    }
-
-}
-```
-
-修改 `AndroidManifest.xml`，在 `MainActivity` 下方新增一个 `activity`，如下：
-
-```xml
-<activity
-  android:name=".umeng.PushActivity"
-  android:launchMode="singleTask"
-  android:exported="true"
-/>
-```
-
-`打开指定页面` 填入你刚才创建的 Activity，比如 `com.abc.umeng.PushActivity`。
+`打开指定页面` 填入 `${包名}.UmengPushActivity`，比如 `com.abc.UmengPushActivity`。
 
 ![](https://user-images.githubusercontent.com/2732303/77288805-9764e700-6d13-11ea-91e1-3c2218f14bcb.png)
 

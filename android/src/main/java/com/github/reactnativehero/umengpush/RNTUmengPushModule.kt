@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
+import com.taobao.accs.utl.ALog
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.commonsdk.statistics.common.MLog
 import com.umeng.message.*
@@ -49,6 +50,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             val pushSecret = metaData.getString("UMENG_PUSH_SECRET", "").trim()
             val channel = metaData.getString("UMENG_CHANNEL", "").trim()
 
+            ALog.isUseTlog = debug
             UMConfigure.setLogEnabled(debug)
             UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
 
@@ -126,6 +128,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
                 }
             })
+
         }
 
         @JvmStatic fun huawei(app: Application, metaData: Bundle) {
@@ -154,7 +157,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             MeizuRegister.register(app, appId, appKey)
         }
 
-        fun handleMessage(currentActivity: Activity, nextActivityClass: Class<*>, intent: Intent?) {
+        @JvmStatic fun handleMessage(currentActivity: Activity, nextActivityClass: Class<*>, intent: Intent?) {
 
             // 离线状态收到多条推送
             // 点击第一条会经此 activity 启动 app

@@ -2,28 +2,28 @@ package com.github.reactnativehero.umengpush
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
+import com.github.reactnativehero.umengpush.RNTUmengPushModule.Companion.handleMessage
 import com.umeng.message.UmengNotifyClickActivity
 
-// com.github.reactnativehero.umengpush.UmengPushActivity 要填写到友盟后台系统通道
-class UmengPushActivity : UmengNotifyClickActivity() {
+open class UmengPushActivity : UmengNotifyClickActivity() {
 
     companion object {
-        lateinit var mainActivityClass: Class<*>
+        @JvmStatic var activityView: Int = 0
+        @JvmStatic lateinit var mainActivityClass: Class<*>
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.umeng_push_activity)
+    override fun onCreate(p0: Bundle?) {
+        super.onCreate(p0)
+        if (activityView != 0) {
+            setContentView(activityView)
+        }
     }
 
-    override fun onMessage(intent: Intent?) {
-
+    override fun onMessage(intent: Intent) {
         // 统计 【打开数】【收到数】【忽略数】
         super.onMessage(intent)
-
-        RNTUmengPushModule.handleMessage(this, mainActivityClass, intent)
-
+        handleMessage(this, mainActivityClass, intent)
     }
 
 }
