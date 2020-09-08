@@ -184,6 +184,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             val newIntent = Intent(currentActivity, nextActivityClass)
             newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
             currentActivity.startActivity(newIntent)
+            currentActivity.overridePendingTransition(0, 0)
             currentActivity.finish()
 
         }

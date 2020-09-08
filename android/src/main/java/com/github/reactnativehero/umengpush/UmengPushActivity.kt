@@ -2,7 +2,6 @@ package com.github.reactnativehero.umengpush
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.github.reactnativehero.umengpush.RNTUmengPushModule.Companion.handleMessage
 import com.umeng.message.UmengNotifyClickActivity
 
