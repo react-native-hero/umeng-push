@@ -42,6 +42,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         private var pushModule: RNTUmengPushModule? = null
 
         private var isStarted = false
+        private var isStartPending = false
 
         // 初始化友盟基础库
         @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
@@ -123,6 +124,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             pushAgent.register(object : IUmengRegisterCallback {
                 override fun onSuccess(token: String) {
                     deviceToken = token
+                    if (isStartPending) {
+                        pushModule?.start()
+                    }
                 }
                 override fun onFailure(code: String, msg: String) {
 
@@ -169,6 +173,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
                     try {
                         val msg = UMessage(JSONObject(it))
+
                         if (isStarted) {
                             pushModule?.onNotificationClicked(msg)
                         }
@@ -229,18 +234,21 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         super.initialize()
         pushModule = this
         isStarted = false
+        isStartPending = false
     }
 
     override fun onCatalystInstanceDestroy() {
         super.onCatalystInstanceDestroy()
         pushModule = null
         isStarted = false
+        isStartPending = false
     }
 
     @ReactMethod
     fun start() {
 
         if (deviceToken.isEmpty()) {
+            isStartPending = true
             return
         }
 
@@ -258,6 +266,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         sendEvent("register", map)
 
         isStarted = true
+        isStartPending = false
 
     }
 
