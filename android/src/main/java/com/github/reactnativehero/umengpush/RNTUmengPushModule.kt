@@ -36,6 +36,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         private const val ALIAS_TYPE_FACEBOOK = "facebook"
         private const val ALIAS_TYPE_TWITTER = "twitter"
 
+        private var appKey = ""
+        private var pushSecret = ""
+        private var channel = ""
 
         private var deviceToken = ""
         private var launchMessage: UMessage? = null
@@ -47,18 +50,20 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         // 初始化友盟基础库
         @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
 
-            val appKey = metaData.getString("UMENG_APP_KEY", "").trim()
-            val pushSecret = metaData.getString("UMENG_PUSH_SECRET", "").trim()
-            val channel = metaData.getString("UMENG_CHANNEL", "").trim()
+            appKey = metaData.getString("UMENG_APP_KEY", "").trim()
+            pushSecret = metaData.getString("UMENG_PUSH_SECRET", "").trim()
+            channel = metaData.getString("UMENG_CHANNEL", "").trim()
 
             ALog.isUseTlog = debug
             UMConfigure.setLogEnabled(debug)
-            UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
+            UMConfigure.preInit(app, appKey, channel)
 
         }
 
         // 初始化友盟推送
         @JvmStatic fun push(app: Application, resourcePackageName: String, notificationOnForeground: Boolean) {
+
+            UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
 
             val pushAgent = PushAgent.getInstance(app)
 
