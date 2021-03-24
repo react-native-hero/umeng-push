@@ -45,16 +45,16 @@
 -keepattributes Exceptions
 -keepattributes InnerClasses
 -keepattributes Signature
--keepattributes SourceFile,LineNumberTable
--keep class com.hianalytics.android.**{*;}
--keep class com.huawei.updatesdk.**{*;}
--keep class com.huawei.hms.**{*;}
+-keepattributes SourceFile, LineNumberTable
+-keep class com.hianalytics.android.** {*;}
+-keep class com.huawei.updatesdk.** {*;}
+-keep class com.huawei.hms.** {*;}
 
 # oppo
 -keep public class * extends android.app.Service
 
 # vivo
 -dontwarn com.vivo.push.**
--keep class com.vivo.push.**{*; }
--keep class com.vivo.vms.**{*; }
--keep class xxx.xxx.xxx.PushMessageReceiverImpl{*;}
+-keep class com.vivo.push.** {*;}
+-keep class com.vivo.vms.** {*;}
+-keep class xxx.xxx.xxx.PushMessageReceiverImpl {*;}

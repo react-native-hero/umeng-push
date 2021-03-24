@@ -77,7 +77,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
             // app 在前台时是否显示推送
             // 在 pushAgent.register 方法之前调用
-            pushAgent.notificationOnForeground = notificationOnForeground
+            pushAgent.setNotificaitonOnForeground(notificationOnForeground)
 
             // 通知栏可以设置最多显示通知的条数
             // 当通知栏显示数目大于设置值，此时再有新通知到达时，会把旧的一条通知隐藏

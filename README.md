@@ -85,7 +85,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 ```
 allprojects {
     repositories {
-        // 确保添加了友盟仓库
+        // 确保添加了华为和友盟仓库
+        maven { url 'https://developer.huawei.com/repo/'}
         maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
@@ -329,7 +330,7 @@ setAdvanced({
   // ios: 是否允许 SDK 自动清空角标，默认自动角标清零
   badgeClear: true,
 
-  // android: 是否响铃，使用 NOTIFICATION_PLAY 枚举值 
+  // android: 是否响铃，使用 NOTIFICATION_PLAY 枚举值
   notificationPlaySound: NOTIFICATION_PLAY.SERVER,
   // android: 是否点亮呼吸灯，使用 NOTIFICATION_PLAY 枚举值
   notificationPlayLights: NOTIFICATION_PLAY.SERVER,
