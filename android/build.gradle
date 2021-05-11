@@ -5,7 +5,7 @@ buildscript {
     repositories {
         jcenter()
         google()
-        maven { url 'https://developer.huawei.com/repo/'}
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 
     dependencies {
@@ -58,17 +58,16 @@ dependencies {
     implementation 'com.umeng.umsdk:vivo-push:2.9.0'
     implementation 'com.umeng.umsdk:vivo-umengaccs:1.1.2'
 
-    implementation 'com.umeng.umsdk:xiaomi-push:3.7.9'
-    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.2.0'
+    implementation 'com.umeng.umsdk:xiaomi-push:3.8.5'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.2.1'
 
     // 基础组件库依赖(必须)
-    api "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.3.7')}"
-    implementation "com.umeng.umsdk:asms:${safeExtGet('umengAsmsVersion', '1.2.1')}"
+    api "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.3.8')}"
+    implementation "com.umeng.umsdk:asms:${safeExtGet('umengAsmsVersion', '1.2.2')}"
     implementation "com.umeng.umsdk:utdid:${safeExtGet('umengUtdidVersion', '1.5.2.1')}"
-    implementation "com.umeng.umsdk:apm:${safeExtGet('umengApmVersion', '1.1.1')}"
 
     // 友盟 push 相关依赖(必须)
-    api "com.umeng.umsdk:push:${safeExtGet('umengPushVersion', '6.2.0')}"
+    api "com.umeng.umsdk:push:${safeExtGet('umengPushVersion', '6.3.3')}"
 
     implementation 'com.umeng.umsdk:alicloud-httpdns:1.3.2.3'
     implementation 'com.umeng.umsdk:alicloud-utils:2.0.0'
@@ -78,6 +77,9 @@ dependencies {
     implementation "com.umeng.umsdk:agoo_aranger:${safeExtGet('umengAgooArangerVersion', '1.0.6')}"
     implementation "com.umeng.umsdk:agoo_networksdk:${safeExtGet('umengAgooNetworkVersion', '3.5.8')}"
     implementation "com.umeng.umsdk:agoo_tnet4android:${safeExtGet('umengAgooTnetVersion', '3.1.14.10')}"
+
+    // 集成U-APM（可选）
+    implementation "com.umeng.umsdk:apm:${safeExtGet('umengApmVersion', '1.2.0')}"
 }
 
 apply plugin: 'kotlin-android'

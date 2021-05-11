@@ -56,14 +56,12 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
             ALog.isUseTlog = debug
             UMConfigure.setLogEnabled(debug)
-            UMConfigure.preInit(app, appKey, channel)
+            UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
 
         }
 
         // 初始化友盟推送
         @JvmStatic fun push(app: Application, resourcePackageName: String, notificationOnForeground: Boolean) {
-
-            UMConfigure.init(app, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
 
             val pushAgent = PushAgent.getInstance(app)
 
@@ -77,7 +75,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
             // app 在前台时是否显示推送
             // 在 pushAgent.register 方法之前调用
-            pushAgent.setNotificaitonOnForeground(notificationOnForeground)
+            pushAgent.notificationOnForeground = notificationOnForeground
 
             // 通知栏可以设置最多显示通知的条数
             // 当通知栏显示数目大于设置值，此时再有新通知到达时，会把旧的一条通知隐藏
@@ -173,7 +171,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             // 点击其他的依然会经此 activity，这里需要做区别
 
             // 跳转到 main activity
-            intent?.getStringExtra(AgooConstants.MESSAGE_BODY)?.let {
+            val body = intent?.getStringExtra(AgooConstants.MESSAGE_BODY)
+
+            body?.let {
                 if (it.isNotEmpty()) {
 
                     try {
@@ -186,7 +186,8 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                             launchMessage = msg
                         }
                     }
-                    catch (e: Exception) {}
+                    catch (e: Exception) {
+                    }
 
                 }
             }

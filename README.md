@@ -87,7 +87,7 @@ allprojects {
     repositories {
         // 确保添加了华为和友盟仓库
         maven { url 'https://developer.huawei.com/repo/'}
-        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url 'https://repo1.maven.org/maven2/' }
     }
 }
 ```
