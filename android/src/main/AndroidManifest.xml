@@ -74,13 +74,33 @@
             android:name=".UmengPushActivity"
             android:launchMode="singleTask"
             android:exported="true"
-        />
+        >
+          <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data
+              android:host="${applicationId}"
+              android:path="/thirdpush"
+              android:scheme="agoo" />
+          </intent-filter>
+        </activity>
 
         <activity-alias
             android:name="${applicationId}.UmengPushActivity"
             android:exported="true"
             android:targetActivity=".UmengPushActivity"
-        />
+        >
+          <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data
+              android:host="${applicationId}"
+              android:path="/thirdpush"
+              android:scheme="agoo" />
+          </intent-filter>
+        </activity-alias>
 
         <!--魅族push应用定义消息receiver声明 -->
         <receiver android:name=".MeizuReceiver">

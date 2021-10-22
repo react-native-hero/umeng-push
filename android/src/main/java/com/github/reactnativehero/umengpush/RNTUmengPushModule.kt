@@ -11,6 +11,7 @@ import com.taobao.accs.utl.ALog
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.commonsdk.statistics.common.MLog
 import com.umeng.message.*
+import com.umeng.message.api.UPushRegisterCallback
 import com.umeng.message.entity.UMessage
 import com.umeng.message.tag.TagManager
 import org.android.agoo.common.AgooConstants
@@ -20,6 +21,7 @@ import org.android.agoo.oppo.OppoRegister
 import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
 import org.json.JSONObject
+
 
 class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
@@ -124,14 +126,15 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                 }
             }
 
-            pushAgent.register(object : IUmengRegisterCallback {
+            pushAgent.register(object : UPushRegisterCallback {
                 override fun onSuccess(token: String) {
                     deviceToken = token
                     if (isStartPending) {
                         pushModule?.start()
                     }
                 }
-                override fun onFailure(code: String, msg: String) {
+
+                override fun onFailure(errCode: String, errDesc: String) {
 
                 }
             })
