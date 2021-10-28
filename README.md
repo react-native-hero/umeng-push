@@ -61,9 +61,7 @@ $ react-native link @react-native-hero/umeng-push
   // 初始化友盟基础库
   // channel 一般填 App Store，如果有测试环境，可按需填写
   // debug 表示是否打印调试信息
-  [RNTUmengPush init:@"appKey" channel:@"App Store" debug:false];
-  // 初始化友盟推送
-  [RNTUmengPush push:launchOptions];
+  [RNTUmengPush init:@"appKey" channel:@"App Store" debug:false launchOptions:launchOptions];
 
   return YES;
 }
@@ -150,16 +148,6 @@ override fun onCreate() {
     // 初始化友盟基础库
     // 第三个参数表示是否显示调试信息
     RNTUmengPushModule.init(this, metaData, false)
-    // 初始化友盟推送
-    // 第二个参数填 AndroidManifest.xml 中 package 的值
-    // 第三个参数表示 app 在前台时是否展现通知
-    RNTUmengPushModule.push(this, "com.abc", true)
-    // 初始化厂商通道，按需调用
-    RNTUmengPushModule.huawei(this, metaData)
-    RNTUmengPushModule.xiaomi(this, metaData)
-    RNTUmengPushModule.oppo(this, metaData)
-    RNTUmengPushModule.vivo(this, metaData)
-    RNTUmengPushModule.meizu(this, metaData)
 }
 ```
 
@@ -191,6 +179,7 @@ public static final int *;
 import {
   ALIAS_TYPE,
   NOTIFICATION_PLAY,
+  init,
   start,
   getTags,
   addTags,
@@ -270,7 +259,28 @@ addListener(
   }
 )
 
+// 对于安卓来说，需要等用户同意隐私政策后，再调用 init，js 的 init 才是真正的初始化
+// https://developer.umeng.com/docs/67966/detail/207155
+init({
+  // 『安卓』app 在前台时是否显示推送
+  notificationOnForeground: true,
+  // 『安卓』填 AndroidManifest.xml 中 package 的值
+  resourcePackageName: 'com.abc',
+  // 『安卓』开启厂商推送通道，按需开启即可
+  huaweiEnabled: true,
+  xiaomiEnabled: true,
+  oppoEnabled: true,
+  vivoEnabled: true,
+  meizuEnabled: true,
+  // 文档最后 『高级设置』中的所有配置项都可以适用于 init，方便在初始化时一次性做好配置
+})
+
+// 注意！！！
+// 下面的所有方法需在 init 调用之后才可调用
+
 // 启动
+// 调用 start 之后才会触发 register 事件
+// 因此注册 register 事件应早于 start
 start()
 
 // 下面这些方法的具体用法和注意事项，请参考文档
@@ -330,6 +340,10 @@ setAdvanced({
   // ios: 是否允许 SDK 自动清空角标，默认自动角标清零
   badgeClear: true,
 
+  // android: 最多显示通知的条数，当显示数目大于设置值时，若再有新通知到达，会移除一条最早的通知，只为 0-10，0 表示不限制个数
+  displayNotificationNumber: 0,
+  // android: 默认情况下，同一台设备在1分钟内收到同一个应用的多条通知时，不会重复提醒，同时在通知栏里新的通知会替换掉旧的通知，可以通过此配置来设置冷却时间
+  muteDurationSeconds: 60,
   // android: 是否响铃，使用 NOTIFICATION_PLAY 枚举值
   notificationPlaySound: NOTIFICATION_PLAY.SERVER,
   // android: 是否点亮呼吸灯，使用 NOTIFICATION_PLAY 枚举值

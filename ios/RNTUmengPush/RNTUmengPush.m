@@ -22,17 +22,13 @@ static NSDictionary *LAUNCH_OPTIONS = nil;
 
 RCT_EXPORT_MODULE(RNTUmengPush);
 
-+ (void)init:(NSString *)appKey channel:(NSString *)channel debug:(BOOL)debug {
++ (void)init:(NSString *)appKey channel:(NSString *)channel debug:(BOOL)debug launchOptions:(NSDictionary *)launchOptions {
 
     [UMConfigure initWithAppkey:appKey channel:channel];
     [UMConfigure setLogEnabled:debug];
-
-}
-
-+ (void)push:(NSDictionary *)launchOptions {
-
+    
     LAUNCH_OPTIONS = launchOptions;
-
+    
 }
 
 + (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -253,6 +249,10 @@ RCT_EXPORT_MODULE(RNTUmengPush);
 
 }
 
+// 初始化
+RCT_EXPORT_METHOD(init:(NSDictionary*)options) {
+    [self setPushSetting:options];
+}
 
 // 获取 device token
 RCT_EXPORT_METHOD(start) {
@@ -458,6 +458,12 @@ RCT_EXPORT_METHOD(removeAlias:(NSString *)alias
 // 高级设置
 RCT_EXPORT_METHOD(setAdvanced:(NSDictionary*)options) {
     
+    [self setPushSetting:options];
+
+}
+
+- (void)setPushSetting:(NSDictionary *)options {
+    
     // 当应用在前台运行收到 Push 时是否弹出 Alert 框
     if ([options objectForKey:@"autoAlert"]) {
         [UMessage setAutoAlert:[RCTConvert BOOL:options[@"autoAlert"]]];
@@ -467,7 +473,7 @@ RCT_EXPORT_METHOD(setAdvanced:(NSDictionary*)options) {
     if ([options objectForKey:@"badgeClear"]) {
         [UMessage setBadgeClear:[RCTConvert BOOL:options[@"badgeClear"]]];
     }
-
+    
 }
 
 - (NSString *)getAliasType:(NSString *)type {

@@ -23,6 +23,10 @@ export const NOTIFICATION_PLAY = {
   SDK_DISABLE: RNTUmengPush.NOTIFICATION_PLAY_SDK_DISABLE,
 }
 
+export function init(options) {
+  RNTUmengPush.init(options || {})
+}
+
 export function start() {
   RNTUmengPush.start()
 }
