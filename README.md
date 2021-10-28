@@ -261,6 +261,7 @@ addListener(
 
 // 对于安卓来说，需要等用户同意隐私政策后，再调用 init，js 的 init 才是真正的初始化
 // https://developer.umeng.com/docs/67966/detail/207155
+// 对于 ios 来说，如果无需使用『高级设置』，则可以不调用 init 方法
 init({
   // 『安卓』app 在前台时是否显示推送
   notificationOnForeground: true,
