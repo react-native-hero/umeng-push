@@ -15,6 +15,7 @@ import com.umeng.message.PushAgent
 import com.umeng.message.UmengMessageHandler
 import com.umeng.message.UmengNotificationClickHandler
 import com.umeng.message.api.UPushRegisterCallback
+import com.umeng.message.api.UPushSettingCallback
 import com.umeng.message.entity.UMessage
 import com.umeng.message.tag.TagManager
 import org.android.agoo.common.AgooConstants
@@ -333,6 +334,32 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     @ReactMethod
     fun setAdvanced(options: ReadableMap) {
         setPushSetting(pushAgent, options)
+    }
+
+    @ReactMethod
+    fun enable(promise: Promise) {
+        pushAgent.enable(object : UPushSettingCallback {
+            override fun onSuccess() {
+                val map = Arguments.createMap()
+                promise.resolve(map)
+            }
+            override fun onFailure(var1: String?, var2: String?) {
+                promise.reject("-1", var1)
+            }
+        })
+    }
+
+    @ReactMethod
+    fun disable(promise: Promise) {
+        pushAgent.disable(object : UPushSettingCallback {
+            override fun onSuccess() {
+                val map = Arguments.createMap()
+                promise.resolve(map)
+            }
+            override fun onFailure(var1: String?, var2: String?) {
+                promise.reject("-1", var1)
+            }
+        })
     }
 
     private fun initSDKByProcess(context: Application, options: ReadableMap) {

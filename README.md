@@ -189,6 +189,9 @@ import {
   removeAlias,
   setAdvanced,
   addListener,
+  supportDisable,
+  enable,
+  disable,
 } from '@react-native-hero/push'
 
 // 注册获取 device token
@@ -357,5 +360,15 @@ setAdvanced({
   noDisturbEndHour: 7,
   noDisturbEndMinute: 0,
 })
+
+
+// 是否支持关闭推送
+// 初始化 SDK 后，默认是开启推送状态，如果需要开关，可借鉴以下代码
+if (supportDisable) {
+  // 关闭推送
+  disable()
+  // 开启推送
+  enable()
+}
 
 ```

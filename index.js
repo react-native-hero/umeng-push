@@ -62,3 +62,14 @@ export function setAdvanced(options) {
 export function addListener(type, listener) {
   return eventEmitter.addListener(type, listener)
 }
+
+// ios 不支持关闭推送
+export const supportDisable = !!RNTUmengPush.disable
+
+export function enable() {
+  return RNTUmengPush.enable()
+}
+
+export function disable() {
+  return RNTUmengPush.disable()
+}
