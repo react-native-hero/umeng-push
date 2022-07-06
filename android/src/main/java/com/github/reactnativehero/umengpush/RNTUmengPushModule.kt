@@ -364,7 +364,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
     private fun initSDKByProcess(context: Application, options: ReadableMap) {
         if (UMUtils.isMainProgress(reactContext)) {
-            Thread { initSDK(context, options) }.start()
+            Thread {
+                initSDK(context, options)
+            }.start()
         }
         else {
             initSDK(context, options)
@@ -373,6 +375,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
     private fun initSDK(context: Application, options: ReadableMap) {
 
+        UMConfigure.submitPolicyGrantResult(reactContext, true)
         UMConfigure.init(context, appKey, channel, UMConfigure.DEVICE_TYPE_PHONE, pushSecret)
 
         pushAgent = PushAgent.getInstance(context)
