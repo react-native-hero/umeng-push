@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m}"
 
   s.dependency 'React'
-  s.dependency 'UMCCommon'
-  s.dependency 'UMCPush'
-  s.dependency 'UMCSecurityPlugins'
+  s.dependency 'UMCommon'
+  s.dependency 'UMPush'
+  s.dependency 'UMDevice'
 end
