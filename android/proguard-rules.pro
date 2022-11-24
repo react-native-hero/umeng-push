@@ -41,10 +41,19 @@
 
 # huawei
 -ignorewarnings
--keepattributes *Annotation*, Exceptions, InnerClasses, Signature, SourceFile, LineNumberTable
--keep class com.hianalytics.android.** {*;}
--keep class com.huawei.updatesdk.** {*;}
--keep class com.huawei.hms.** {*;}
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.huawei.hianalytics.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+
+# honor
+-keep class com.hihonor.android.push.** {*;}
+-keep class com.hihonor.push.** {*;}
+-keep class org.android.agoo.honor.* {*;}
 
 # meizu
 -keep class com.meizu.cloud.** {*;}

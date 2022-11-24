@@ -3,7 +3,7 @@
 
     <application>
 
-        <!-- value 统一前面加空格（除了华为和vivo），避免读取 meta data 自动转型成数字 -->
+        <!-- value 统一前面加空格（除了华为、荣耀、vivo），避免读取 meta data 自动转型成数字 -->
         <meta-data
             android:name="UMENG_APP_KEY"
             android:value="\ ${UMENG_APP_KEY}"
@@ -47,6 +47,10 @@
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="appid=${HUAWEI_PUSH_APP_ID}"
+        />
+        <meta-data
+            android:name="com.hihonor.push.app_id"
+            android:value="${HONOR_PUSH_APP_ID}"
         />
         <meta-data
             android:name="com.vivo.push.app_id"

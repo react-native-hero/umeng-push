@@ -20,6 +20,7 @@ import com.umeng.message.entity.UMessage
 import com.umeng.message.tag.TagManager
 import org.android.agoo.common.AgooConstants
 import org.android.agoo.huawei.HuaWeiRegister
+import org.android.agoo.honor.HonorRegister
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.oppo.OppoRegister
 import org.android.agoo.vivo.VivoRegister
@@ -454,6 +455,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         if (options.hasKey("huaweiEnabled") && options.getBoolean("huaweiEnabled")) {
             HuaWeiRegister.register(context)
+        }
+        if (options.hasKey("honorEnabled") && options.getBoolean("honorEnabled")) {
+            HonorRegister.register(context)
         }
         if (options.hasKey("xiaomiEnabled") && options.getBoolean("xiaomiEnabled")) {
             MiPushRegistar.register(context, xiaomiAppId, xiaomiAppKey)

@@ -101,6 +101,7 @@ android {
                 UMENG_PUSH_SECRET: '',
                 UMENG_CHANNEL: '',
                 HUAWEI_PUSH_APP_ID: '',
+                HONOR_PUSH_APP_ID: '',
                 XIAOMI_PUSH_APP_ID: '',
                 XIAOMI_PUSH_APP_KEY: '',
                 OPPO_PUSH_APP_KEY: '',
@@ -117,6 +118,7 @@ android {
                 UMENG_PUSH_SECRET: '',
                 UMENG_CHANNEL: '',
                 HUAWEI_PUSH_APP_ID: '',
+                HONOR_PUSH_APP_ID: '',
                 XIAOMI_PUSH_APP_ID: '',
                 XIAOMI_PUSH_APP_KEY: '',
                 OPPO_PUSH_APP_KEY: '',
@@ -272,6 +274,7 @@ init({
   resourcePackageName: 'com.abc',
   // 『安卓』开启厂商推送通道，按需开启即可
   huaweiEnabled: true,
+  honorEnabled: true,
   xiaomiEnabled: true,
   oppoEnabled: true,
   vivoEnabled: true,
