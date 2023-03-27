@@ -67,6 +67,9 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         private var jsInitOptions: ReadableMap? = null
 
+        var onNotificationPresented: ((HashMap<String, String>, HashMap<String, String>) -> Unit)? = null
+        var onNotificationClicked: ((HashMap<String, String>, HashMap<String, String>) -> Unit)? = null
+
         // 初始化友盟基础库
         @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
 
@@ -199,8 +202,8 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         // 启动参数
         launchMessage?.let {
-            map.putMap("notification", formatNotification(it))
-            map.putMap("custom", formatCustom(it))
+            map.putMap("notification", toWritableMap(formatNotification(it)))
+            map.putMap("custom", toWritableMap(formatCustom(it)))
             launchMessage = null
         }
 
@@ -571,22 +574,34 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     private fun onNotificationPresented(message: UMessage) {
 
         val map = Arguments.createMap()
-        map.putMap("notification", formatNotification(message))
-        map.putMap("custom", formatCustom(message))
+        val notification = formatNotification(message)
+        val custom = formatCustom(message)
+        map.putMap("notification", toWritableMap(notification))
+        map.putMap("custom", toWritableMap(custom))
         map.putBoolean("presented", true)
 
         sendEvent("remoteNotification", map)
+
+        onNotificationPresented?.let {
+            it.invoke(notification, custom)
+        }
 
     }
 
     private fun onNotificationClicked(message: UMessage) {
 
         val map = Arguments.createMap()
-        map.putMap("notification", formatNotification(message))
-        map.putMap("custom", formatCustom(message))
+        val notification = formatNotification(message)
+        val custom = formatCustom(message)
+        map.putMap("notification", toWritableMap(notification))
+        map.putMap("custom", toWritableMap(custom))
         map.putBoolean("clicked", true)
 
         sendEvent("remoteNotification", map)
+
+        onNotificationClicked?.let {
+            it.invoke(notification, custom)
+        }
 
     }
 
@@ -594,7 +609,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         val map = Arguments.createMap()
         map.putString("message", message.custom)
-        map.putMap("custom", formatCustom(message))
+        map.putMap("custom", toWritableMap(formatCustom(message)))
 
         sendEvent("message", map)
 
@@ -606,21 +621,29 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                 .emit(eventName, params)
     }
 
-    private fun formatNotification(msg: UMessage): WritableMap {
-        val body = Arguments.createMap()
-        body.putString("title", msg.title)
-        body.putString("content", msg.text)
-        return body
+    private fun formatNotification(msg: UMessage): HashMap<String, String> {
+        val map = HashMap<String, String>()
+        map["title"] = msg.title
+        map["content"] = msg.text
+        return map
     }
 
-    private fun formatCustom(msg: UMessage): WritableMap {
-        val custom = Arguments.createMap()
+    private fun formatCustom(msg: UMessage): HashMap<String, String> {
+        val map = HashMap<String, String>()
         msg.extra?.let {
             for ((key,value) in it) {
-                custom.putString(key, value)
+                map[key] = value
             }
         }
-        return custom
+        return map
+    }
+
+    private fun toWritableMap(hashMap: HashMap<String, String>): WritableMap {
+        val result = Arguments.createMap()
+        hashMap.forEach {
+            result.putString(it.key, it.value)
+        }
+        return result
     }
 
 }
