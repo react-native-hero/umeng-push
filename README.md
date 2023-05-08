@@ -194,6 +194,9 @@ import {
   supportDisable,
   enable,
   disable,
+  supportNotificationChannel,
+  createNotificationChannel,
+  deleteNotificationChannel,
 } from '@react-native-hero/push'
 
 // 注册获取 device token
@@ -372,6 +375,31 @@ if (supportDisable) {
   disable()
   // 开启推送
   enable()
+}
+
+// 是否支持推送通道（安卓 >= 8.0支持推送通道）
+// 初始化 SDK 后，默认是开启推送状态，如果需要开关，可借鉴以下代码
+if (supportNotificationChannel) {
+  // 创建推送通道
+  // 如果已创建该通道（通过 id 判断），则无视此次调用
+  createNotificationChannel({
+    id: 'id',
+    name: 'name',
+    importance: 'max|high|low|min|default',
+    // 下面都是可选字段
+    // 具体参考 https://blog.csdn.net/bingeho/article/details/124454006
+    description: 'description',
+    lockscreenVisibility: 'secret|private|public',
+    enableLights: true|false,
+    enableVibration: true|false,
+    setShowBadge: true|false,
+    groupId: 'groupId',
+    groupName: 'groupName',
+  })
+  // 删除推送通道
+  deleteNotificationChannel({
+    id: 'id'
+  })
 }
 
 ```

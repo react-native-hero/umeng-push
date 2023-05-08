@@ -2,8 +2,13 @@ package com.github.reactnativehero.umengpush
 
 import android.app.Activity
 import android.app.Application
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
@@ -364,6 +369,74 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
                 promise.reject("-1", var1)
             }
         })
+    }
+
+    @ReactMethod
+    fun createNotificationChannel(options: ReadableMap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val id = options.getString("id")
+
+            val notificationManager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (notificationManager.getNotificationChannel(id) != null) {
+                return
+            }
+
+            val name = options.getString("name")
+            val importance = when (options.getString("importance")) {
+                "max" -> NotificationManager.IMPORTANCE_MAX
+                "high" -> NotificationManager.IMPORTANCE_HIGH
+                "low" -> NotificationManager.IMPORTANCE_LOW
+                "min" -> NotificationManager.IMPORTANCE_MIN
+                else -> NotificationManager.IMPORTANCE_DEFAULT
+            }
+
+            val mChannel = NotificationChannel(id, name, importance)
+            if (options.hasKey("description")) {
+                mChannel.description = options.getString("description")
+            }
+            // VISIBILITY_PUBLIC 显示所有通知信息
+            // VISIBILITY_PRIVATE 只显示通知标题不显示通知内容
+            // VISIBILITY_SECRET 不显示任何通知信息
+            if (options.hasKey("lockscreenVisibility")) {
+                mChannel.lockscreenVisibility = when (options.getString("lockscreenVisibility")) {
+                    "secret" -> Notification.VISIBILITY_SECRET
+                    "private" -> Notification.VISIBILITY_PRIVATE
+                    else -> Notification.VISIBILITY_PUBLIC
+                }
+            }
+            if (options.hasKey("enableLights")) {
+                mChannel.enableLights(options.getBoolean("enableLights"))
+            }
+            if (options.hasKey("enableVibration")) {
+                mChannel.enableVibration(options.getBoolean("enableVibration"))
+            }
+            if (options.hasKey("setShowBadge")) {
+                mChannel.setShowBadge(options.getBoolean("setShowBadge"))
+            }
+
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            if (options.hasKey("groupId") && options.hasKey("groupName")) {
+                val groupId = options.getString("groupId")
+                val groupName = options.getString("groupName")
+                notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName))
+                mChannel.group = groupId
+            }
+
+            notificationManager.createNotificationChannel(mChannel)
+
+        }
+
+    }
+
+    @ReactMethod
+    fun deleteNotificationChannel(options: ReadableMap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val id = options.getString("id")
+            val notificationManager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.deleteNotificationChannel(id)
+        }
     }
 
     private fun initSDKByProcess(context: Application, options: ReadableMap) {

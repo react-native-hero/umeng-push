@@ -73,3 +73,14 @@ export function enable() {
 export function disable() {
   return RNTUmengPush.disable()
 }
+
+// ios 不支持推送通道
+export const supportNotificationChannel = !!RNTUmengPush.createNotificationChannel
+
+export function createNotificationChannel(options) {
+  RNTUmengPush.createNotificationChannel(options)
+}
+
+export function deleteNotificationChannel(options) {
+  RNTUmengPush.deleteNotificationChannel(options)
+}
