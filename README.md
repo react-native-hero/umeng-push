@@ -378,7 +378,6 @@ if (supportDisable) {
 }
 
 // 是否支持推送通道（安卓 >= 8.0支持推送通道）
-// 初始化 SDK 后，默认是开启推送状态，如果需要开关，可借鉴以下代码
 if (supportNotificationChannel) {
   // 创建推送通道
   // 如果已创建该通道（通过 id 判断），则无视此次调用
