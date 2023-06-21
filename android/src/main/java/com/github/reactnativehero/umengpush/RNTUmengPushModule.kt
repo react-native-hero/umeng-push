@@ -103,31 +103,19 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         }
 
-        @JvmStatic fun handleMessage(currentActivity: Activity, nextActivityClass: Class<*>, intent: Intent?) {
+        @JvmStatic fun handleMessage(currentActivity: Activity, nextActivityClass: Class<*>, msg: UMessage?) {
 
             // 离线状态收到多条推送
             // 点击第一条会经此 activity 启动 app
             // 点击其他的依然会经此 activity，这里需要做区别
 
             // 跳转到 main activity
-            val body = intent?.getStringExtra(AgooConstants.MESSAGE_BODY)
-
-            body?.let {
-                if (it.isNotEmpty()) {
-
-                    try {
-                        val msg = UMessage(JSONObject(it))
-
-                        if (isStarted) {
-                            pushModule?.onNotificationClicked(msg)
-                        }
-                        else {
-                            launchMessage = msg
-                        }
-                    }
-                    catch (e: Exception) {
-                    }
-
+            msg?.let {
+                if (isStarted) {
+                    pushModule?.onNotificationClicked(it)
+                }
+                else {
+                    launchMessage = it
                 }
             }
 

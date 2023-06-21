@@ -37,7 +37,6 @@
 
 # xiaomi
 -keep class org.android.agoo.xiaomi.MiPushBroadcastReceiver {*;}
--dontwarn com.xiaomi.push.**
 
 # huawei
 -ignorewarnings
