@@ -1,9 +1,9 @@
 buildscript {
     // Buildscript is evaluated before everything else so we can't use safeExtGet
-    def kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.3.40'
+    def kotlinVersion = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.7.20'
 
     repositories {
-        jcenter()
+        mavenCentral()
         google()
         maven { url 'https://developer.huawei.com/repo/' }
     }
@@ -43,9 +43,9 @@ android {
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet('kotlinVersion', '1.3.40')}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet('kotlinVersion', '1.7.20')}"
 
-    api "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.6.6')}"
+    api "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.6.7')}"
     api "com.umeng.umsdk:asms:${safeExtGet('umengAsmsVersion', '1.8.0')}"
     api "com.umeng.umsdk:push:${safeExtGet('umengPushVersion', '6.6.2')}"
 }
