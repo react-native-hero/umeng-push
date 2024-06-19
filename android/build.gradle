@@ -45,9 +45,9 @@ dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet('kotlinVersion', '1.7.20')}"
 
-    api "com.umeng.umsdk:common:${safeExtGet('umengCommonVersion', '9.6.7')}"
-    api "com.umeng.umsdk:asms:${safeExtGet('umengAsmsVersion', '1.8.2')}"
-    api "com.umeng.umsdk:push:${safeExtGet('umengPushVersion', '6.6.3')}"
+    api 'com.umeng.umsdk:common:+'
+    api 'com.umeng.umsdk:asms:+'
+    api 'com.umeng.umsdk:push:+'
 }
 
 apply plugin: 'com.huawei.agconnect'
