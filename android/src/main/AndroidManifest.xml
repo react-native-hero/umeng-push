@@ -96,15 +96,14 @@
         <!--魅族push应用定义消息receiver声明 -->
         <receiver
             android:name=".MeizuReceiver"
-            android:exported="true"
-        >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
-                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
-                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
-                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
-                <category android:name="${applicationId}" />
+              <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+              <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+              <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+              <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+              <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+              <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
 

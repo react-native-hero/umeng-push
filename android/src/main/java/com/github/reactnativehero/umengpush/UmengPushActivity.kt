@@ -1,47 +1,40 @@
 package com.github.reactnativehero.umengpush
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import com.github.reactnativehero.umengpush.RNTUmengPushModule.Companion.handleMessage
-import com.umeng.message.UmengNotifyClickActivity
+import com.umeng.message.UmengNotifyClick
 import com.umeng.message.entity.UMessage
-import org.android.agoo.common.AgooConstants
-import org.json.JSONObject
 
-open class UmengPushActivity : UmengNotifyClickActivity() {
+open class UmengPushActivity : Activity() {
 
     companion object {
         @JvmStatic var activityView: Int = 0
         @JvmStatic lateinit var mainActivityClass: Class<*>
     }
 
-    override fun onCreate(p0: Bundle?) {
-        super.onCreate(p0)
+    private val mNotificationClick: UmengNotifyClick = object : UmengNotifyClick() {
+        public override fun onMessage(msg: UMessage) {
+            val body = msg.raw.toString()
+            if (!TextUtils.isEmpty(body)) {
+                handleMessage(this@UmengPushActivity, mainActivityClass, msg)
+            }
+        }
+    }
+
+    override fun onCreate(bundle: Bundle?) {
+        super.onCreate(bundle)
         if (activityView != 0) {
             setContentView(activityView)
         }
+        mNotificationClick.onCreate(this, intent)
     }
 
-    override fun onMessage(p0: UMessage?) {
-        super.onMessage(p0)
-        handleMessage(this, mainActivityClass, p0)
-    }
-
-    override fun onMessage(intent: Intent?) {
-        // 统计 【打开数】【收到数】【忽略数】
-        super.onMessage(intent)
-
-        var msg: UMessage? = null
-        intent?.getStringExtra(AgooConstants.MESSAGE_BODY)?.let {
-            if (it.isNotEmpty()) {
-                try {
-                    msg = UMessage(JSONObject(it))
-                }
-                catch (e: Exception) {
-                }
-            }
-        }
-        handleMessage(this, mainActivityClass, msg)
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        mNotificationClick.onNewIntent(intent)
     }
 
 }

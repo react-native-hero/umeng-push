@@ -1,6 +1,6 @@
 {
   "name": "@react-native-hero/umeng-push",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "react native umeng push",
   "main": "index.js",
   "scripts": {

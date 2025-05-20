@@ -22,15 +22,12 @@ import com.umeng.message.UmengNotificationClickHandler
 import com.umeng.message.api.UPushRegisterCallback
 import com.umeng.message.api.UPushSettingCallback
 import com.umeng.message.entity.UMessage
-import com.umeng.message.tag.TagManager
-import org.android.agoo.common.AgooConstants
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.honor.HonorRegister
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.oppo.OppoRegister
 import org.android.agoo.vivo.VivoRegister
 import org.android.agoo.xiaomi.MiPushRegistar
-import org.json.JSONObject
 
 class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
@@ -94,7 +91,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             UMConfigure.setLogEnabled(debug)
 
             // 解决推送消息显示乱码的问题
-            PushAgent.setup(app, appKey, pushSecret)
             UMConfigure.preInit(app, appKey, channel)
 
             jsInitOptions?.let {
@@ -136,7 +132,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         return "RNTUmengPush"
     }
 
-    override fun getConstants(): Map<String, Any>? {
+    override fun getConstants(): Map<String, Any> {
 
         val constants: MutableMap<String, Any> = HashMap()
 
@@ -167,8 +163,8 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         jsInitOptions = null
     }
 
-    override fun onCatalystInstanceDestroy() {
-        super.onCatalystInstanceDestroy()
+    override fun invalidate() {
+        super.invalidate()
         pushModule = null
         isStarted = false
         isStartPending = false
@@ -233,13 +229,13 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         val list = ArrayList<String>()
 
         for (i in 0 until tags.size()) {
-            tags.getString(i)?.let {
+            tags.getString(i).let {
                 list.add(it)
             }
         }
 
         pushAgent.tagManager.addTags(
-            TagManager.TCallBack { isSuccess, result ->
+            { isSuccess, result ->
                 if (isSuccess) {
                     val map = Arguments.createMap()
                     result?.let {
@@ -261,13 +257,13 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         val list = ArrayList<String>()
 
         for (i in 0 until tags.size()) {
-            tags.getString(i)?.let {
+            tags.getString(i).let {
                 list.add(it)
             }
         }
 
         pushAgent.tagManager.deleteTags(
-            TagManager.TCallBack { isSuccess, result ->
+            { isSuccess, result ->
                 if (isSuccess) {
                     val map = Arguments.createMap()
                     result?.let {
@@ -643,9 +639,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         sendEvent("remoteNotification", map)
 
-        onNotificationPresented?.let {
-            it.invoke(notification, custom)
-        }
+        onNotificationPresented?.invoke(notification, custom)
 
     }
 
@@ -660,9 +654,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         sendEvent("remoteNotification", map)
 
-        onNotificationClicked?.let {
-            it.invoke(notification, custom)
-        }
+        onNotificationClicked?.invoke(notification, custom)
 
     }
 
