@@ -229,7 +229,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         val list = ArrayList<String>()
 
         for (i in 0 until tags.size()) {
-            tags.getString(i).let {
+            tags.getString(i)?.let {
                 list.add(it)
             }
         }
@@ -257,7 +257,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         val list = ArrayList<String>()
 
         for (i in 0 until tags.size()) {
-            tags.getString(i).let {
+            tags.getString(i)?.let {
                 list.add(it)
             }
         }
