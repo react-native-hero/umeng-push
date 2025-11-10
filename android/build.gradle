@@ -53,33 +53,33 @@ dependencies {
 
 apply plugin: 'com.huawei.agconnect'
 dependencies {
-    api 'com.umeng.umsdk:huawei-umengaccs:2.1.0'
-    api 'com.huawei.hms:push:6.12.0.300'
+    api 'com.umeng.umsdk:huawei-umengaccs:2.2.0'
+    api 'com.huawei.hms:push:6.13.0.300'
 }
 
 dependencies {
-    api 'com.umeng.umsdk:meizu-umengaccs:2.1.0'
-    api 'com.umeng.umsdk:meizu-push:4.2.7'
+    api 'com.umeng.umsdk:meizu-umengaccs:2.2.0'
+    api 'com.umeng.umsdk:meizu-push:5.0.3'
 }
 
 dependencies {
-    api 'com.umeng.umsdk:oppo-umengaccs:2.1.0'
-    api 'com.umeng.umsdk:oppo-push:3.4.0'
+    api 'com.umeng.umsdk:oppo-umengaccs:2.2.0'
+    api 'com.umeng.umsdk:oppo-push:3.5.3'
 }
 
 dependencies {
-    api 'com.umeng.umsdk:vivo-umengaccs:2.1.0'
-    api 'com.umeng.umsdk:vivo-push:3.0.0.7'
+    api 'com.umeng.umsdk:vivo-umengaccs:2.2.0'
+    api 'com.umeng.umsdk:vivo-push:4.0.6.0'
 }
 
 dependencies {
-    api 'com.umeng.umsdk:honor-umengaccs:2.1.0'
-    api 'com.umeng.umsdk:honor-push:7.0.61.303'
+    api 'com.umeng.umsdk:honor-umengaccs:2.2.0'
+    api 'com.umeng.umsdk:honor-push:8.0.12.307'
 }
 
 dependencies {
-    api 'com.umeng.umsdk:xiaomi-umengaccs:2.1.0'
-    api 'com.umeng.umsdk:xiaomi-push:5.9.9'
+    api 'com.umeng.umsdk:xiaomi-umengaccs:2.2.0'
+    api 'com.umeng.umsdk:xiaomi-push:6.0.1'
 }
 
 apply plugin: 'kotlin-android'

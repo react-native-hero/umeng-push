@@ -7,7 +7,6 @@ import android.text.TextUtils
 import com.github.reactnativehero.umengpush.RNTUmengPushModule.Companion.handleMessage
 import com.umeng.message.UmengNotifyClick
 import com.umeng.message.entity.UMessage
-
 open class UmengPushActivity : Activity() {
 
     companion object {
@@ -16,7 +15,7 @@ open class UmengPushActivity : Activity() {
     }
 
     private val mNotificationClick: UmengNotifyClick = object : UmengNotifyClick() {
-        public override fun onMessage(msg: UMessage) {
+        override fun onMessage(msg: UMessage) {
             val body = msg.raw.toString()
             if (!TextUtils.isEmpty(body)) {
                 handleMessage(this@UmengPushActivity, mainActivityClass, msg)

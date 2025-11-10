@@ -5,66 +5,66 @@
 
         <!-- value 统一前面加空格（除了华为、荣耀、vivo），避免读取 meta data 自动转型成数字 -->
         <meta-data
-            android:name="UMENG_APP_KEY"
-            android:value="\ ${UMENG_APP_KEY}"
+          android:name="UMENG_APP_KEY"
+          android:value="\ ${UMENG_APP_KEY}"
         />
         <meta-data
-            android:name="UMENG_PUSH_SECRET"
-            android:value="\ ${UMENG_PUSH_SECRET}"
+          android:name="UMENG_PUSH_SECRET"
+          android:value="\ ${UMENG_PUSH_SECRET}"
         />
         <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="\ ${UMENG_CHANNEL}"
-        />
-
-        <meta-data
-            android:name="XIAOMI_PUSH_APP_ID"
-            android:value="\ ${XIAOMI_PUSH_APP_ID}"
-        />
-        <meta-data
-            android:name="XIAOMI_PUSH_APP_KEY"
-            android:value="\ ${XIAOMI_PUSH_APP_KEY}"
+          android:name="UMENG_CHANNEL"
+          android:value="\ ${UMENG_CHANNEL}"
         />
 
         <meta-data
-            android:name="OPPO_PUSH_APP_KEY"
-            android:value="\ ${OPPO_PUSH_APP_KEY}"
+          android:name="XIAOMI_PUSH_APP_ID"
+          android:value="\ ${XIAOMI_PUSH_APP_ID}"
         />
         <meta-data
-            android:name="OPPO_PUSH_APP_SECRET"
-            android:value="\ ${OPPO_PUSH_APP_SECRET}"
-        />
-
-        <meta-data
-            android:name="MEIZU_PUSH_APP_ID"
-            android:value="\ ${MEIZU_PUSH_APP_ID}"
-        />
-        <meta-data
-            android:name="MEIZU_PUSH_APP_KEY"
-            android:value="\ ${MEIZU_PUSH_APP_KEY}"
+          android:name="XIAOMI_PUSH_APP_KEY"
+          android:value="\ ${XIAOMI_PUSH_APP_KEY}"
         />
 
         <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="appid=${HUAWEI_PUSH_APP_ID}"
+          android:name="OPPO_PUSH_APP_KEY"
+          android:value="\ ${OPPO_PUSH_APP_KEY}"
         />
         <meta-data
-            android:name="com.hihonor.push.app_id"
-            android:value="${HONOR_PUSH_APP_ID}"
+          android:name="OPPO_PUSH_APP_SECRET"
+          android:value="\ ${OPPO_PUSH_APP_SECRET}"
+        />
+
+        <meta-data
+          android:name="MEIZU_PUSH_APP_ID"
+          android:value="\ ${MEIZU_PUSH_APP_ID}"
         />
         <meta-data
-            android:name="com.vivo.push.app_id"
-            android:value="${VIVO_PUSH_APP_ID}"
+          android:name="MEIZU_PUSH_APP_KEY"
+          android:value="\ ${MEIZU_PUSH_APP_KEY}"
+        />
+
+        <meta-data
+          android:name="com.huawei.hms.client.appid"
+          android:value="appid=${HUAWEI_PUSH_APP_ID}"
         />
         <meta-data
-            android:name="com.vivo.push.api_key"
-            android:value="${VIVO_PUSH_APP_KEY}"
+          android:name="com.hihonor.push.app_id"
+          android:value="${HONOR_PUSH_APP_ID}"
+        />
+        <meta-data
+          android:name="com.vivo.push.app_id"
+          android:value="${VIVO_PUSH_APP_ID}"
+        />
+        <meta-data
+          android:name="com.vivo.push.api_key"
+          android:value="${VIVO_PUSH_APP_KEY}"
         />
 
         <activity
-            android:name=".UmengPushActivity"
-            android:launchMode="singleTask"
-            android:exported="true"
+          android:name=".UmengPushActivity"
+          android:exported="true"
+          android:launchMode="singleTask"
         >
           <intent-filter>
             <action android:name="android.intent.action.VIEW" />
@@ -78,9 +78,9 @@
         </activity>
 
         <activity-alias
-            android:name="${applicationId}.UmengPushActivity"
-            android:exported="true"
-            android:targetActivity=".UmengPushActivity"
+          android:name="${applicationId}.UmengPushActivity"
+          android:exported="true"
+          android:targetActivity=".UmengPushActivity"
         >
           <intent-filter>
             <action android:name="android.intent.action.VIEW" />
@@ -92,20 +92,6 @@
               android:scheme="agoo" />
           </intent-filter>
         </activity-alias>
-
-        <!--魅族push应用定义消息receiver声明 -->
-        <receiver
-            android:name=".MeizuReceiver"
-            android:exported="true">
-            <intent-filter>
-              <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
-              <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-              <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
-              <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
-              <action android:name="com.meizu.c2dm.intent.RECEIVE" />
-              <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
 
     </application>
 
