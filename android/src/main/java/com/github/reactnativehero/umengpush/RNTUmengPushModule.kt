@@ -71,6 +71,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
 
         var onNotificationPresented: ((HashMap<String, String>, HashMap<String, String>) -> Unit)? = null
         var onNotificationClicked: ((HashMap<String, String>, HashMap<String, String>) -> Unit)? = null
+        var onMessageReceived: ((HashMap<String, String>) -> Unit)? = null
 
         // 初始化友盟基础库
         @JvmStatic fun init(app: Application, metaData: Bundle, debug: Boolean) {
@@ -472,6 +473,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
             }
 
             override fun dealWithCustomMessage(context: Context?, msg: UMessage?) {
+                super.dealWithCustomMessage(context, msg)
                 if (msg != null) {
                     onMessage(msg)
                 }
@@ -593,7 +595,7 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     private fun getAliasType(type: String): String {
         return when (type) {
             ALIAS_TYPE_SINA -> {
-               "sina"
+                "sina"
             }
             ALIAS_TYPE_TENCENT -> {
                 "tencent"
@@ -638,7 +640,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         map.putBoolean("presented", true)
 
         sendEvent("remoteNotification", map)
-
         onNotificationPresented?.invoke(notification, custom)
 
     }
@@ -653,7 +654,6 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
         map.putBoolean("clicked", true)
 
         sendEvent("remoteNotification", map)
-
         onNotificationClicked?.invoke(notification, custom)
 
     }
@@ -661,17 +661,19 @@ class RNTUmengPushModule(private val reactContext: ReactApplicationContext) : Re
     private fun onMessage(message: UMessage) {
 
         val map = Arguments.createMap()
+        val custom = formatCustom(message)
         map.putString("message", message.custom)
-        map.putMap("custom", toWritableMap(formatCustom(message)))
+        map.putMap("custom", toWritableMap(custom))
 
         sendEvent("message", map)
+        onMessageReceived?.invoke(custom)
 
     }
 
     private fun sendEvent(eventName: String, params: WritableMap) {
         reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-                .emit(eventName, params)
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(eventName, params)
     }
 
     private fun formatNotification(msg: UMessage): HashMap<String, String> {
